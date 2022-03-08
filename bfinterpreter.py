@@ -14,18 +14,25 @@ ui = input("\033[32mInput: \033[0m")
 
 loc = 0
 
-while loc < len(ud):
+while loc < len(ud): # code == ud
 
     i = ud[loc]
 
     if i == "[":
-        if a[p] == 0:
+        if a[p] == 0: # array[pointer]
+            
             obrac = 1
+
             while obrac > 0:
+
                 loc += 1
+
                 if ud[loc] == "[":
+
                     obrac += 1
+
                 if ud[loc] == "]":
+
                     obrac -= 1     
 
     if i == "]":

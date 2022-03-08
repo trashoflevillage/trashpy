@@ -15,9 +15,9 @@
 #" = Duplicates the top value of the stack to the top of the stack.
 #' = Duplicates the second top value of the stack to the top of the stack.
 #! = Pops the top number of the stack. If it was 0, push 1. Otherwise, push 0.
-( = Jumps to matching ) if top number is 0.
-[ = Jumps to matching ] if top number is 0.
-] = Jumps to the matching [ if the top number is not 0.
+#( = Jumps to matching ) if top number is 0.
+#[ = Jumps to matching ] if top number is 0.
+#] = Jumps to the matching [ if the top number is not 0.
 
 Everything in the stack is an integer.
 Getting input does nothing if input is empty.
