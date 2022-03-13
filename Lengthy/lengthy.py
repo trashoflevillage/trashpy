@@ -2,6 +2,7 @@ import os
 
 userinput:list[str] = []
 stack = []
+subroutines = {}
 
 class StackOutOfBounds(Exception):
     pass
@@ -27,7 +28,7 @@ def runCode(code: str):
             char = code[location]
             
             if char == "(":
-                if stack[-1] == 0:
+                if peek() == 0:
                     depth:int = 1
                     while depth > 0:
                         location += 1
@@ -37,8 +38,38 @@ def runCode(code: str):
                         elif code[location] == ")":
                             depth -= 1
 
+            if char == "{":
+                depth:int = 1
+                subroutine:str = ""
+                localloc = 0
+                key = ""
+                value = ""
+                memory = ""
+                reading = 1
+                while depth > 0:
+                    localloc += 1
+                    location += 1
+                    if code[location] == "{":
+                        depth += 1
+                    elif code[location] == "}":
+                        depth -= 1
+                    elif code[location] == "|" and depth == 1:
+                        key = memory
+                        memory = ""
+                        reading += 1
+                    memory = memory + code[location]
+                if reading == 2:
+                    value = memory[1:len(memory)-1]
+                if reading == 1:
+                    runCode(subroutines[memory[:-1]])
+                    
+                subroutine = subroutine + code[location]
+                if key in subroutines:
+                    subroutines.pop(key)
+                subroutines[key] = value
+
             elif char == "[":
-                if stack[-1] == 0:
+                if peek() == 0:
                     depth:int = 1
                     while depth > 0:
                         location += 1
@@ -49,7 +80,7 @@ def runCode(code: str):
                             depth -= 1
 
             elif char == "]":
-                if stack[-1] != 0:
+                if peek() != 0:
                     depth:int = 1
                     while depth > 0:
                         location -= 1
@@ -65,7 +96,7 @@ def runCode(code: str):
             elif char == "*": a = pop(); b = pop(); stack.append(b*a)
             elif char == "/": a = pop(); b = pop(); stack.append(int(b/a))
             elif char == "%": a = pop(); b = pop(); stack.append(b%a)
-            elif char == "\\": a = pop(); b = pop(); stack.append(a,b)
+            elif char == "\\": a = pop(); b = pop(); stack.append(a); stack.append(b)
             elif char == "_": pop()
             elif char == "\"": stack.append(peek())
             elif char == "'": stack.append(peek(-2))
@@ -87,6 +118,8 @@ def runCode(code: str):
                 else:
                     raise StackOutOfBounds
             elif char == "<": stack.insert(0, pop())
+            elif char in subroutines:
+                runCode(subroutines[char])
 
             location += 1
 
