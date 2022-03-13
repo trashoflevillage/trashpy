@@ -124,7 +124,7 @@ def runCode(code: str):
             location += 1
 
 
-    except StackOutOfBounds:
+    except Exception:
         pass
 
 filename = input("\033[32mFile Directory (.lengthy): \033[0m")
