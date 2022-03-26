@@ -34,4 +34,4 @@ Subroutines:
 
     {0|$"-}${0}
 
-    {0|$"-} specifies that when the subroutine "0" is called, the code "$"-" will run. {0} calls the subroutine called "0", which triggers "$$-".
+    {0|$"-} specifies that when the subroutine "0" is called, the code "$"-" will run. {0} calls the subroutine called "0", which triggers "$"-".
