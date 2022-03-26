@@ -131,6 +131,9 @@ filename = input("\033[32mFile Directory (.lengthy): \033[0m")
 
 dirname = os.path.dirname(__file__)
 
+if ".lengthy" not in filename:
+    filename = filename + ".lengthy"
+
 with open(os.path.join(dirname, filename), "r") as file: # Make this automatically append .lengthy if it's not specified
     filecontents = file.read()
     if "." in filecontents or "," in filecontents:
